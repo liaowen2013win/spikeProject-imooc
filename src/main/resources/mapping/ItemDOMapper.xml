@@ -33,6 +33,15 @@
         from item
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+    <!--查看商品列表-->
+    <select id="listItems" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from item
+        order by sales desc
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         <!--
           WARNING - @mbg.generated

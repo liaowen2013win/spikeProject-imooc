@@ -6,6 +6,8 @@
 package cn.xpu.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,22 @@ public class ItemController extends BaseController {
         ItemVO itemVO = convertVOFromModel(itemModelForReturn);
         return CommonReturnType.create(itemVO);
 
+    }
+
+    /**
+     * 商品列表页面浏览
+     *
+     * @return
+     */
+    @RequestMapping(value = "/list", method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType listItem() {
+        List<ItemModel> itemModelList = itemService.listItem();
+        List<ItemVO> itemVOList = itemModelList.stream().map(itemModel -> {
+            ItemVO itemVO = this.convertVOFromModel(itemModel);
+            return itemVO;
+        }).collect(Collectors.toList());
+        return CommonReturnType.create(itemVOList);
     }
 
 
